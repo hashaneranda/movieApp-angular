@@ -1,0 +1,19 @@
+<div class="movie">
+  <img
+    src="https://image.tmdb.org/t/p/original/{{ coverImg }}"
+    alt="{{ title }}"
+    class="movie__img"
+  />
+  <div>
+    <h2 class="movie__title">
+      <a routerLink="/detail/{{ id }}">{{ title }}</a>
+    </h2>
+    <h3 class="movie__year">{{ year }}</h3>
+    <p>{{ summary.length > 235 ? summary.slice(0, 235) : summary }}</p>
+    <ul class="movie__genres">
+      <li *ngFor="let genre of genres">
+        {{ genre?.name }}
+      </li>
+    </ul>
+  </div>
+</div>

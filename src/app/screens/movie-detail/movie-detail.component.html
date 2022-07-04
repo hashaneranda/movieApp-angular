@@ -1,0 +1,62 @@
+<div class="back_container" (click)="goBack()">
+  <mat-icon aria-hidden="false" aria-label="Example home icon"
+    >arrow_back</mat-icon
+  >
+  <h2>Go back</h2>
+</div>
+
+<div *ngIf="isLoaded" class="details_div">
+  <div class="image-div">
+    <img
+      class="details_image"
+      src="https://image.tmdb.org/t/p/original/{{ movie.poster_path }}"
+      alt="movie-poster"
+    />
+  </div>
+  <div class="content_div">
+    <h1 *ngIf="isLoaded">{{ movie.title }}</h1>
+    <p>"{{ movie.overview }}"</p>
+    <h3>Release date: {{ movie.release_date }}</h3>
+    <h3>
+      Production:
+      <span *ngFor="let company of movie.production_companies; let last = last">
+        <span *ngIf="!last">
+          "{{ company.name }}" - {{ company.origin_country }},
+        </span>
+        <span *ngIf="last">
+          "{{ company.name }}" - {{ company.origin_country }}
+        </span>
+      </span>
+    </h3>
+    <h3>Language: {{ movie.original_language }}</h3>
+    <h3>Rating {{ movie.vote_average }}</h3>
+    <h3>
+      Genre:
+      <span *ngFor="let genre of movie.genres; let last = last">
+        <span *ngIf="!last"> {{ genre.name }}, </span>
+        <span *ngIf="last">
+          {{ genre.name }}
+        </span>
+      </span>
+    </h3>
+    <h3>Budget: {{ movie.budget }}$</h3>
+    <h3>Revenue: {{ movie.revenue }}$</h3>
+  </div>
+</div>
+<div *ngIf="gotError" class="error_div">
+  <h1>Oops, something went wrong while getting the movie.</h1>
+  <div>
+    <button
+      class="error-btn"
+      color="blue"
+      text="Try again"
+      (click)="refresh()"
+    ></button>
+    <button
+      class="error-btn"
+      color="blue"
+      text="Return"
+      (click)="goBack()"
+    ></button>
+  </div>
+</div>
