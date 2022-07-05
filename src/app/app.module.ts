@@ -24,6 +24,7 @@ import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 import { MovieDetailComponent } from './screens/movie-detail/movie-detail.component';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { catchError, of, forkJoin } from 'rxjs';
+import { ReviewListModule } from './components/review-list/review-list.module';
 
 export function initApp(http: HttpClient, translate: TranslateService) {
   return () =>
@@ -64,6 +65,7 @@ export function initApp(http: HttpClient, translate: TranslateService) {
     MatButtonModule,
     MatIconModule,
     TranslateModule.forRoot(),
+    ReviewListModule,
   ],
   declarations: [
     AppComponent,

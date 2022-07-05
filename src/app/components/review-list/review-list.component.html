@@ -1,0 +1,8 @@
+<h1>Reviews</h1>
+
+<div class="card mb-2" *ngFor="let review of reviews">
+  <div class="card-body">
+    <h3 class="card-title">{{ review.author }}</h3>
+    <p class="card-text blockquote-footer">{{ review.content }}</p>
+  </div>
+</div>

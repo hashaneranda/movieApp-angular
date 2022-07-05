@@ -43,6 +43,9 @@
     <h3>Revenue: {{ movie.revenue }}$</h3>
   </div>
 </div>
+
+<review-list *ngIf="isLoaded" [movieId]="movie.id"></review-list>
+
 <div *ngIf="gotError" class="error_div">
   <h1>Oops, something went wrong while getting the movie.</h1>
   <div>

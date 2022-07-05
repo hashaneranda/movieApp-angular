@@ -1,7 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
-import { MovieListResponse, Movie, GenreResponse } from '@app/models/movie';
+import {
+  MovieListResponse,
+  Movie,
+  GenreResponse,
+  ReviewListResponse,
+} from '@app/models/movie';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -79,10 +84,10 @@ export class MoviesService {
    * Fetch Genres
    * @returns
    */
-  getReviewList(movie: number): Observable<GenreResponse> {
+  getReviewList(movie: number): Observable<ReviewListResponse> {
     let params = new HttpParams().set('api_key', this._apiKey);
 
-    return this.http.get<GenreResponse>(
+    return this.http.get<ReviewListResponse>(
       `${this._baseUrl}/movie/${movie}/reviews`,
       {
         params: params,

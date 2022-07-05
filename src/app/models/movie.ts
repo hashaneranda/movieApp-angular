@@ -26,10 +26,24 @@ export type Movie = {
   isWishlisted?: boolean;
 };
 
+export type Review = {
+  author: string;
+  author_details: any;
+  id: string;
+  content: string;
+  created_at: string;
+};
+
 export type MovieListResponse = {
   page: number;
   results: Movie[];
   total_pages: number;
+};
+
+export type ReviewListResponse = {
+  page: number;
+  results: Review[];
+  id: number;
 };
 
 export type GenreResponse = {
