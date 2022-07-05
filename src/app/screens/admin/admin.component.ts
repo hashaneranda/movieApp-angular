@@ -3,13 +3,14 @@ import { first } from 'rxjs/operators';
 
 import { User } from '@app/models';
 import { UserService } from '@app/services';
+import { Router } from '@angular/router';
 
 @Component({ templateUrl: 'admin.component.html' })
 export class AdminComponent implements OnInit {
   loading = false;
   users: User[] = [];
 
-  constructor(private userService: UserService) {}
+  constructor(private userService: UserService, private router: Router) {}
 
   ngOnInit() {
     this.loading = true;
@@ -20,5 +21,12 @@ export class AdminComponent implements OnInit {
         this.loading = false;
         this.users = users;
       });
+  }
+
+  /**
+   * handle navigation to movies
+   */
+  navigateToAddMovie() {
+    this.router.navigate(['/add-movie']);
   }
 }

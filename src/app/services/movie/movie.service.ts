@@ -74,4 +74,19 @@ export class MoviesService {
       params: params,
     });
   }
+
+  /**
+   * Fetch Genres
+   * @returns
+   */
+  getReviewList(movie: number): Observable<GenreResponse> {
+    let params = new HttpParams().set('api_key', this._apiKey);
+
+    return this.http.get<GenreResponse>(
+      `${this._baseUrl}/movie/${movie}/reviews`,
+      {
+        params: params,
+      }
+    );
+  }
 }

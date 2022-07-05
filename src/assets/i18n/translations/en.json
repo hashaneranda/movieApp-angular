@@ -4,5 +4,6 @@
   "main.nav.login": "Login",
   "main.nav.register": "Register",
   "home.title": "Home",
-  "movies.title": "Movies"
+  "movies.title": "Movies",
+  "admin.addMovie": "Add Movie"
 }

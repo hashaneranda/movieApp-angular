@@ -40,6 +40,7 @@ const routes: Routes = [
     loadChildren: () =>
       import('./screens/movie/movie.module').then((m) => m.MovieModule),
   },
+  { path: 'add-movie', loadChildren: () => import('./screens/add-movie/add-movie.module').then(m => m.AddMovieModule) },
 
   // otherwise redirect to home
   { path: '**', redirectTo: '' },
