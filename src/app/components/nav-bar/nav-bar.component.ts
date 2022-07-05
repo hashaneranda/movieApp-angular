@@ -43,4 +43,14 @@ export class NavBarComponent implements OnInit {
     this.authenticationService.logout();
     window.location.reload();
   }
+
+  /**
+   * Change language
+   * @param code language code
+   */
+  changeLanguage(code: string, e: any) {
+    e.preventDefault();
+    localStorage.setItem('locale', code);
+    window.location.reload();
+  }
 }
