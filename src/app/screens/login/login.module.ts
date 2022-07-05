@@ -1,20 +1,20 @@
 import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { RegisterRoutingModule } from './register-routing.module';
-import { RegisterComponent } from './register.component';
+import { LoginComponent } from './login.component';
 import { MatButtonModule } from '@angular/material/button';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { HttpClient } from '@angular/common/http';
 import { initApp } from '@app/app.module';
 import { MatInputModule } from '@angular/material/input';
+import { LoginRoutingModule } from './login-routing.module';
 
 @NgModule({
-  declarations: [RegisterComponent],
+  declarations: [LoginComponent],
   imports: [
     CommonModule,
-    RegisterRoutingModule,
+    LoginRoutingModule,
     MatButtonModule,
     ReactiveFormsModule,
     TranslateModule.forChild({
@@ -28,4 +28,4 @@ import { MatInputModule } from '@angular/material/input';
     MatInputModule,
   ],
 })
-export class RegisterModule {}
+export class LoginModule {}

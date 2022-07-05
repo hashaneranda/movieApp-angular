@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { AdminComponent } from '@app/screens/admin';
-import { LoginComponent } from '@app/screens/login';
 import { AuthGuard } from '@app/helpers';
 import { Role } from '@app/models';
 import { MovieDetailComponent } from './screens/movie-detail/movie-detail.component';
@@ -26,7 +25,8 @@ const routes: Routes = [
   },
   {
     path: 'login',
-    component: LoginComponent,
+    loadChildren: () =>
+      import('./screens/login/login.module').then((m) => m.LoginModule),
   },
   {
     path: 'register',
@@ -40,7 +40,15 @@ const routes: Routes = [
     loadChildren: () =>
       import('./screens/movie/movie.module').then((m) => m.MovieModule),
   },
-  { path: 'add-movie', loadChildren: () => import('./screens/add-movie/add-movie.module').then(m => m.AddMovieModule) },
+  {
+    path: 'add-movie',
+    loadChildren: () =>
+      import('./screens/add-movie/add-movie.module').then(
+        (m) => m.AddMovieModule
+      ),
+    canActivate: [AuthGuard],
+    data: { roles: [Role.Admin] },
+  },
 
   // otherwise redirect to home
   { path: '**', redirectTo: '' },

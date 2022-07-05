@@ -1,66 +1,44 @@
-﻿<div class="col-md-6 offset-md-3 mt-5">
-  <div class="alert alert-info">
+﻿<div class="header_wrapper mt-5 d-flex flex-row justify-content-between">
+  <h1>{{ "login.title" | translate }}</h1>
+</div>
+
+<form
+  [formGroup]="loginForm"
+  (ngSubmit)="onSubmit()"
+  class="mt-5 d-flex flex-column align-items-center justify-content-center gap-3"
+>
+  <mat-form-field
+    class="w-50"
+    appearance="fill"
+    *ngFor="let config of formConfig"
+  >
+    <mat-label>{{ config.label }}</mat-label>
+    <input
+      [type]="config.type"
+      matInput
+      [formControlName]="config.name"
+      [errorStateMatcher]="matcher"
+    />
+    <mat-error
+      *ngIf="f?.[config.name]?.hasError(config.name) && !f?.[config.name]?.hasError('required')"
+    >
+      Please enter a valid {{ config.label }}
+    </mat-error>
+    <mat-error *ngIf="f?.[config.name]?.hasError('required')">
+      {{ config.label }} is <strong>required</strong>
+    </mat-error>
+  </mat-form-field>
+
+  <button mat-raised-button color="primary" [disabled]="loading" class="mt-3">
+    <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+    {{ "login.title" | translate }}
+  </button>
+  <div *ngIf="error" class="alert alert-danger mt-3 mb-0">
+    {{ error }}
+  </div>
+
+  <div class="alert alert-info mt-5 w-50 justify-self-center">
     <strong>Normal User</strong> - U: user P: user<br />
     <strong>Administrator</strong> - U: admin P: admin
   </div>
-  <div class="card">
-    <h4 class="card-header">MovieApp</h4>
-    <div class="card-body">
-      <form
-        [formGroup]="loginForm"
-        (ngSubmit)="onSubmit()"
-        class="d-flex flex-column justify-content-center"
-      >
-        <div class="form-group">
-          <label for="username">Username</label>
-          <input
-            type="text"
-            formControlName="username"
-            class="form-control"
-            [ngClass]="{ 'is-invalid': submitted && f?.['username']?.errors }"
-          />
-          <div
-            *ngIf="submitted && f?.['username']?.errors"
-            class="invalid-feedback"
-          >
-            <div *ngIf="f?.['username']?.errors?.['required']">
-              Username is required
-            </div>
-          </div>
-        </div>
-        <div class="form-group">
-          <label for="password">Password</label>
-          <input
-            type="password"
-            formControlName="password"
-            class="form-control"
-            [ngClass]="{ 'is-invalid': submitted && f?.['password']?.errors }"
-          />
-          <div
-            *ngIf="submitted && f?.['password']?.errors"
-            class="invalid-feedback"
-          >
-            <div *ngIf="f?.['password']?.errors?.['required']">
-              Password is required
-            </div>
-          </div>
-        </div>
-        <button
-          mat-raised-button
-          color="primary"
-          [disabled]="loading"
-          class="mt-3"
-        >
-          <span
-            *ngIf="loading"
-            class="spinner-border spinner-border-sm mr-1"
-          ></span>
-          Login
-        </button>
-        <div *ngIf="error" class="alert alert-danger mt-3 mb-0">
-          {{ error }}
-        </div>
-      </form>
-    </div>
-  </div>
-</div>
+</form>

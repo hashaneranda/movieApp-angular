@@ -12,7 +12,7 @@ import { delay, materialize, dematerialize } from 'rxjs/operators';
 
 import { User, Role } from '@app/models';
 
-const users: User[] = [
+const defaultUsers: User[] = [
   {
     id: 1,
     username: 'admin',
@@ -25,8 +25,8 @@ const users: User[] = [
     id: 2,
     username: 'user',
     password: 'user',
-    firstName: 'Normal',
-    lastName: 'User',
+    firstName: 'Jhon',
+    lastName: 'Doe',
     role: Role.User,
   },
 ];
@@ -38,6 +38,18 @@ export class FakeBackendInterceptor implements HttpInterceptor {
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
     const { url, method, headers, body } = request;
+
+    let userDb: any = localStorage.getItem('userDB');
+
+    try {
+      if (userDb) userDb = JSON.parse(userDb);
+    } catch (error) {
+      console.log('error parsing');
+    }
+
+    userDb = userDb ?? [];
+
+    const users = [...userDb, ...defaultUsers];
 
     return handleRoute();
 

@@ -4,6 +4,20 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
 
 import { AuthenticationService } from '@app/services';
+import { MyErrorStateMatcher } from '@app/helpers/form.helper';
+
+const formConfig = [
+  {
+    label: 'Username',
+    name: 'username',
+    type: 'text',
+  },
+  {
+    label: 'Password',
+    name: 'password',
+    type: 'password',
+  },
+];
 
 @Component({ templateUrl: 'login.component.html' })
 export class LoginComponent implements OnInit {
@@ -11,6 +25,9 @@ export class LoginComponent implements OnInit {
   loading = false;
   submitted = false;
   error = '';
+
+  formConfig: any = formConfig;
+  matcher = new MyErrorStateMatcher();
 
   constructor(
     private formBuilder: FormBuilder,
@@ -25,10 +42,13 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.loginForm = this.formBuilder.group({
-      username: ['', Validators.required],
-      password: ['', Validators.required],
+    const formGroupConfig: any = {};
+
+    this.formConfig.map((x: any) => {
+      formGroupConfig[x.name] = ['', Validators.required];
     });
+
+    this.loginForm = this.formBuilder.group(formGroupConfig);
   }
 
   // convenience getter for easy access to form fields

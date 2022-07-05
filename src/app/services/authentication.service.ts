@@ -1,11 +1,11 @@
 ﻿import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { environment } from '@environments/environment';
-import { User } from '@app/models';
+import { Role, User } from '@app/models';
 
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService {
@@ -39,6 +39,46 @@ export class AuthenticationService {
           return user;
         })
       );
+  }
+
+  /**
+   *  handle register user
+   * @param username
+   * @param password
+   * @param firstname
+   * @param lastname
+   * @returns
+   */
+  register(
+    username: string,
+    password: string,
+    firstname: string,
+    lastname: string
+  ) {
+    const user = {
+      id: new Date().getTime(),
+      username,
+      password,
+      firstName: firstname,
+      lastName: lastname,
+      role: Role.User,
+    };
+
+    let userDb: any = localStorage.getItem('userDB');
+
+    try {
+      if (userDb) userDb = JSON.parse(userDb);
+    } catch (error) {
+      console.log('error parsing');
+    }
+
+    userDb = userDb ?? [];
+
+    localStorage.setItem('userDB', JSON.stringify([...userDb, user]));
+    localStorage.setItem('user', JSON.stringify(user));
+    this.userSubject.next(user);
+
+    return of(user);
   }
 
   logout() {

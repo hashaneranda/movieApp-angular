@@ -3,7 +3,6 @@ import { HttpClient } from '@angular/common/http';
 
 import { environment } from '@environments/environment';
 import { User } from '@app/models';
-import { of } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class UserService {
@@ -14,11 +13,6 @@ export class UserService {
   }
 
   getById(id: number) {
-    const response = {
-      firstName: 'Jhon',
-      lastName: 'Doe',
-    };
-
-    return of(response);
+    return this.http.get<User>(`${environment.apiUrl}/users/${id}`);
   }
 }

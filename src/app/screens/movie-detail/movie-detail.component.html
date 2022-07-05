@@ -41,6 +41,14 @@
     </h3>
     <h3>Budget: {{ movie.budget }}$</h3>
     <h3>Revenue: {{ movie.revenue }}$</h3>
+
+    <div class="action_container d-flex flex-row gap-4">
+      <button watchLater mat-raised-button color="primary">Watch later</button>
+      <button addFavorite mat-raised-button color="secondary">
+        Add Favorite
+      </button>
+      <button watchMovie mat-raised-button color="accent">Watch</button>
+    </div>
   </div>
 </div>
 

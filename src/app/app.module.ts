@@ -19,12 +19,14 @@ import { AppRoutingModule } from './app-routing.module';
 
 import { JwtInterceptor, ErrorInterceptor } from '@app/helpers';
 import { AdminComponent } from '@app/screens/admin';
-import { LoginComponent } from '@app/screens/login';
 import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 import { MovieDetailComponent } from './screens/movie-detail/movie-detail.component';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { catchError, of, forkJoin } from 'rxjs';
 import { ReviewListModule } from './components/review-list/review-list.module';
+import { WatchLaterDirective } from './directives/watch-later/watch-later.directive';
+import { AddFavoriteDirective } from './directives/add-favorite/add-favorite.directive';
+import { WatchMovieDirective } from './directives/watch-movie/watch-movie.directive';
 
 export function initApp(http: HttpClient, translate: TranslateService) {
   return () =>
@@ -70,9 +72,11 @@ export function initApp(http: HttpClient, translate: TranslateService) {
   declarations: [
     AppComponent,
     AdminComponent,
-    LoginComponent,
     NavBarComponent,
     MovieDetailComponent,
+    WatchLaterDirective,
+    AddFavoriteDirective,
+    WatchMovieDirective,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
