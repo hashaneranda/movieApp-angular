@@ -32,18 +32,23 @@
         <a class="nav-link" href="/admin">Admin</a>
       </li>
 
-      <li class="nav-item dropdown">
+      <li class="nav-item dropdown" ngbDropdown>
         <a
           class="nav-link dropdown-toggle"
           id="navbarDropdownMenuLink"
           role="button"
-          data-toggle="dropdown"
-          aria-haspopup="true"
+          data-bs-toggle="dropdown"
           aria-expanded="false"
+          ngbDropdownToggle
         >
           Language
         </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+
+        <div
+          class="dropdown-menu"
+          aria-labelledby="navbarDropdownMenuLink"
+          ngbDropdownMenu
+        >
           <a class="dropdown-item" (click)="changeLanguage('en', $event)"
             >English</a
           >
@@ -67,6 +72,15 @@
       </li>
     </div>
     <div class="user_container_actions navbar-nav mr-auto" *ngIf="user">
+      <button mat-flat-button color="accent" class="mr-5" *ngIf="!isPrime">
+        <mat-icon>favorite</mat-icon>
+        Upgrade to Prime
+      </button>
+      <button mat-flat-button color="primary" class="mr-2" *ngIf="isPrime">
+        <mat-icon>favorite</mat-icon>
+        Prime Member
+      </button>
+
       <li class="nav-item">
         <a class="nav-link"
           >{{ userFromApi.firstName }} {{ userFromApi.lastName }}</a
@@ -76,17 +90,5 @@
         <a class="nav-link" (click)="logout()">Logout </a>
       </li>
     </div>
-
-    <!-- <form class="form-inline my-2 my-lg-0 d-flex flex-row">
-      <input
-        class="form-control mr-sm-2"
-        type="search"
-        placeholder="Search"
-        aria-label="Search"
-      />
-      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
-        Search
-      </button>
-    </form> -->
   </div>
 </nav>

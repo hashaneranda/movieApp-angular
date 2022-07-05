@@ -1,10 +1,10 @@
 {
-  "main.nav.home": "Home",
-  "main.nav.movie": "Movies",
-  "main.nav.login": "Login",
-  "main.nav.register": "Register",
-  "home.title": "Home",
-  "admin.addMovie": "Add Movie",
-  "login.title": "Login",
-  "register.title": "Register"
+  "main.nav.home": "Maison",
+  "main.nav.movie": "Films",
+  "main.nav.login": "Connexion",
+  "main.nav.register": "S'inscrire",
+  "home.title": "Maison",
+  "admin.addMovie": "Ajouter un film",
+  "login.title": "Connexion",
+  "register.title": "S'inscrire"
 }

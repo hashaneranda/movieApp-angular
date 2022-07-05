@@ -15,12 +15,11 @@ export class NavBarComponent implements OnInit {
   userFromApi: User | any;
 
   get isAdmin() {
-    console.log(
-      'user--',
-      this.user,
-      this.user && this.user?.role === Role.Admin
-    );
     return this.user && this.user?.role === Role.Admin;
+  }
+
+  get isPrime() {
+    return this.user && this.user?.role === Role.Prime;
   }
 
   constructor(
