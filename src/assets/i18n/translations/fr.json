@@ -10,6 +10,6 @@
   "admin.addMovie": "Ajouter un film",
   "login.title": "Connexion",
   "register.title": "S'inscrire",
-  "favorite.title": "Favorite Movies",
-  "watchLater.title": "Watch Later Movies"
+  "favorite.title": "Films préférés",
+  "watchLater.title": "Regarder des films plus tard"
 }

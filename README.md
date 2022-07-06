@@ -13,10 +13,15 @@ Admin added movies won't be available to filter and search.
 
 For favorites, watch later, watched and reviews we have used local storage to store those values.
 
+### Bonus features
+
+- Category based movie filtering
+- Translation(Localization) - language selection avaialbe between english and french
+
 ## Getting Started
 
-Github - https://github.com/hashaneranda/movieApp-angular
-Deployed - http://movie-app-angular-lilac.vercel.app/
+- Github - https://github.com/hashaneranda/movieApp-angular
+- Deployed - http://movie-app-angular-lilac.vercel.app/
 
 ### Installation
 
