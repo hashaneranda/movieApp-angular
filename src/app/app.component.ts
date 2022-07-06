@@ -10,6 +10,9 @@ import { User, Role } from './models';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
+  title(title: any) {
+    throw new Error('Method not implemented.');
+  }
   user: User | any;
 
   constructor(private authenticationService: AuthenticationService) {
