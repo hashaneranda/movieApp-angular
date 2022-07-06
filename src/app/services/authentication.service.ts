@@ -81,6 +81,29 @@ export class AuthenticationService {
     return of(user);
   }
 
+  /**
+   * Handle upgrade to prime
+   * @param userID user ID
+   */
+  upgradeToPrime(userID: number) {
+    let userDb: any = localStorage.getItem('userDB');
+
+    try {
+      if (userDb) userDb = JSON.parse(userDb);
+    } catch (error) {
+      console.log('error parsing');
+    }
+
+    userDb = userDb ?? [];
+
+    const newUserDb = userDb.map((x: User) => {
+      if (x.id === userID) x.role = Role.Prime;
+      return x;
+    });
+
+    localStorage.setItem('userDB', JSON.stringify(newUserDb));
+  }
+
   logout() {
     // remove user from local storage to log user out
     localStorage.removeItem('user');

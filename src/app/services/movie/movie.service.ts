@@ -7,7 +7,7 @@ import {
   GenreResponse,
   ReviewListResponse,
 } from '@app/models/movie';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -47,6 +47,22 @@ export class MoviesService {
    * @returns Movie
    */
   getMovie(movieId: number): Observable<Movie> {
+    let movieDB: any = localStorage.getItem('movieDB');
+
+    try {
+      if (movieDB) movieDB = JSON.parse(movieDB);
+    } catch (error) {
+      console.log('error parsing');
+    }
+
+    movieDB = movieDB ?? [];
+
+    const localMovie = movieDB.find((x: Movie) => x.id === Number(movieId));
+
+    console.log('localMovie', localMovie, movieDB, movieId);
+
+    if (localMovie) return of(localMovie);
+
     let params = new HttpParams().set('api_key', this._apiKey);
     return this.http.get<Movie>(`${this._baseUrl}/movie/${movieId}`, {
       params: params,
@@ -93,5 +109,38 @@ export class MoviesService {
         params: params,
       }
     );
+  }
+
+  /**
+   * Add movie
+   * @param movie movie object
+   * @returns
+   */
+  addMovie(movie: any): Observable<any> {
+    return this.http.post<any>(`${environment.apiUrl}/add-movie`, {
+      ...movie,
+    });
+  }
+
+  /**
+   * Fetch recent movie
+   * @returns
+   */
+  getRecentMovies(): Observable<MovieListResponse> {
+    let movieDB: any = localStorage.getItem('movieDB');
+
+    try {
+      if (movieDB) movieDB = JSON.parse(movieDB);
+    } catch (error) {
+      console.log('error parsing');
+    }
+
+    movieDB = movieDB ?? [];
+
+    return of({
+      page: 1,
+      total_pages: 10,
+      results: movieDB,
+    });
   }
 }

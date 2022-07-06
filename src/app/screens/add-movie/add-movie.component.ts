@@ -1,15 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  FormGroupDirective,
-  NgForm,
-  Validators,
-} from '@angular/forms';
-import { ErrorStateMatcher } from '@angular/material/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { first } from 'rxjs/operators';
 import { MyErrorStateMatcher } from '@app/helpers/form.helper';
+import { MoviesService } from '@app/services/movie/movie.service';
+import { Router } from '@angular/router';
 
 /** Error when invalid control is dirty, touched, or submitted. */
 
@@ -32,7 +27,7 @@ const formConfig = [
   {
     label: 'IMDB rating',
     name: 'rating',
-    type: 'text',
+    type: 'number',
   },
   {
     label: 'Language',
@@ -65,7 +60,12 @@ export class AddMovieComponent implements OnInit {
   movieFormConfig = formConfig;
   matcher = new MyErrorStateMatcher();
 
-  constructor(private location: Location, private formBuilder: FormBuilder) {}
+  constructor(
+    private location: Location,
+    private formBuilder: FormBuilder,
+    private moviesService: MoviesService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     const formGroupConfig: any = {};
@@ -85,28 +85,35 @@ export class AddMovieComponent implements OnInit {
   onSubmit() {
     this.submitted = true;
 
-    // // stop here if form is invalid
-    // if (this.loginForm.invalid) {
-    //   return;
-    // }
+    // stop here if form is invalid
+    if (this.movieForm.invalid) {
+      return;
+    }
 
-    // this.loading = true;
-    // this.authenticationService
-    //   .login(this.f?.['username'].value, this.f?.['password'].value)
-    //   .pipe(first())
-    //   .subscribe({
-    //     next: () => {
-    //       // get return url from query parameters or default to home page
-    //       const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
-    //       this.router.navigateByUrl(returnUrl);
+    const movieObj = {
+      name: this.f?.['name'].value,
+      title: this.f?.['title'].value,
+      description: this.f?.['description'].value,
+      rating: this.f?.['rating'].value,
+      language: this.f?.['language'].value,
+      genre: this.f?.['genre'].value,
+      image: this.f?.['image'].value,
+    };
 
-    //       window.location.reload();
-    //     },
-    //     error: (error) => {
-    //       this.error = error;
-    //       this.loading = false;
-    //     },
-    //   });
+    this.loading = true;
+    this.moviesService
+      .addMovie(movieObj)
+      .pipe(first())
+      .subscribe({
+        next: (movie) => {
+          // get return url from query parameters or default to home page
+          this.router.navigate([`movie/${movie.id}`]);
+        },
+        error: (error) => {
+          this.error = error;
+          this.loading = false;
+        },
+      });
   }
 
   /**

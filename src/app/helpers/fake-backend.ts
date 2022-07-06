@@ -51,6 +51,16 @@ export class FakeBackendInterceptor implements HttpInterceptor {
 
     const users = [...userDb, ...defaultUsers];
 
+    let movieDB: any = localStorage.getItem('movieDB');
+
+    try {
+      if (movieDB) movieDB = JSON.parse(movieDB);
+    } catch (error) {
+      console.log('error parsing');
+    }
+
+    movieDB = movieDB ?? [];
+
     return handleRoute();
 
     function handleRoute() {
@@ -61,6 +71,8 @@ export class FakeBackendInterceptor implements HttpInterceptor {
           return getUsers();
         case url.match(/\/users\/\d+$/) && method === 'GET':
           return getUserById();
+        case url.endsWith('/add-movie') && method === 'POST':
+          return addMovie();
         default:
           // pass through any requests not handled above
           return next.handle(request);
@@ -142,6 +154,36 @@ export class FakeBackendInterceptor implements HttpInterceptor {
     function idFromUrl() {
       const urlParts = url.split('/');
       return parseInt(urlParts[urlParts.length - 1]);
+    }
+
+    function addMovie() {
+      console.log('body', body);
+
+      // const { movie } = body;
+      const { name, title, description, rating, language, genre, image } = body;
+
+      const movieNew = {
+        adult: false,
+        id: new Date().getTime(),
+        original_language: language,
+        original_title: title,
+        overview: description,
+        poster_path: image,
+        release_date: new Date().toISOString().split('T')[0],
+        title: title,
+        vote_average: rating,
+        genres: [
+          {
+            id: 1,
+            name: genre,
+          },
+        ],
+        isWishlisted: false,
+      };
+
+      localStorage.setItem('movieDB', JSON.stringify([...movieDB, movieNew]));
+
+      return ok(movieNew);
     }
   }
 }

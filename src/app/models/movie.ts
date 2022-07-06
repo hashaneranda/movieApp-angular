@@ -9,7 +9,7 @@ type Companies = {
 
 export type Movie = {
   adult: boolean;
-  backdrop_path: string;
+  backdrop_path?: string;
   id: number;
   original_language: string;
   original_title: string;
@@ -18,11 +18,11 @@ export type Movie = {
   release_date: string;
   title: string;
   vote_average: number;
-  runtime: number;
-  budget: number;
+  runtime?: number;
+  budget?: number;
   genres: Genres[];
-  revenue: number;
-  production_companies: Companies[];
+  revenue?: number;
+  production_companies?: Companies[];
   isWishlisted?: boolean;
 };
 

@@ -9,7 +9,7 @@
   <div class="image-div">
     <img
       class="details_image"
-      src="https://image.tmdb.org/t/p/original/{{ movie.poster_path }}"
+      [src]="movie.poster_path | movieImageResolver"
       alt="movie-poster"
     />
   </div>

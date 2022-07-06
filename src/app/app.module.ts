@@ -27,6 +27,7 @@ import { ReviewListModule } from './components/review-list/review-list.module';
 import { WatchLaterDirective } from './directives/watch-later/watch-later.directive';
 import { AddFavoriteDirective } from './directives/add-favorite/add-favorite.directive';
 import { WatchMovieDirective } from './directives/watch-movie/watch-movie.directive';
+import { MovieImageResolverPipe } from './pipes/movie-image-resolver/movie-image-resolver.pipe';
 
 export function initApp(http: HttpClient, translate: TranslateService) {
   return () =>
@@ -77,6 +78,7 @@ export function initApp(http: HttpClient, translate: TranslateService) {
     WatchLaterDirective,
     AddFavoriteDirective,
     WatchMovieDirective,
+    MovieImageResolverPipe,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

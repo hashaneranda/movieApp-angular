@@ -71,8 +71,14 @@
         </a>
       </li>
     </div>
-    <div class="user_container_actions navbar-nav mr-auto" *ngIf="user">
-      <button mat-flat-button color="accent" class="mr-5" *ngIf="!isPrime">
+    <div class="user_container_actions navbar-nav mr-auto" *ngIf="userFromApi">
+      <button
+        mat-flat-button
+        color="accent"
+        class="mr-5"
+        *ngIf="!isPrime && !isAdmin"
+        (click)="upgradePrime()"
+      >
         <mat-icon>favorite</mat-icon>
         Upgrade to Prime
       </button>

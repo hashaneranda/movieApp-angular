@@ -19,7 +19,7 @@ export class NavBarComponent implements OnInit {
   }
 
   get isPrime() {
-    return this.user && this.user?.role === Role.Prime;
+    return this.userFromApi && this.userFromApi?.role === Role.Prime;
   }
 
   constructor(
@@ -45,6 +45,14 @@ export class NavBarComponent implements OnInit {
    */
   logout() {
     this.authenticationService.logout();
+    window.location.reload();
+  }
+
+  /**
+   * Handle on click upgrade to prime
+   */
+  upgradePrime() {
+    this.authenticationService.upgradeToPrime(this.user.id);
     window.location.reload();
   }
 
