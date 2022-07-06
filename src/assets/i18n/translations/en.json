@@ -4,6 +4,8 @@
   "main.nav.login": "Login",
   "main.nav.register": "Register",
   "home.title": "Home",
+  "home.recent": "Recently Added",
+  "home.trending": "Trending Now",
   "movies.title": "Movies",
   "admin.addMovie": "Add Movie",
   "login.title": "Login",
