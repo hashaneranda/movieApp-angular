@@ -9,5 +9,7 @@
   "movies.title": "Films",
   "admin.addMovie": "Ajouter un film",
   "login.title": "Connexion",
-  "register.title": "S'inscrire"
+  "register.title": "S'inscrire",
+  "favorite.title": "Favorite Movies",
+  "watchLater.title": "Watch Later Movies"
 }

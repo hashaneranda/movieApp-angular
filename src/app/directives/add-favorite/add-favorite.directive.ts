@@ -14,7 +14,7 @@ export class AddFavoriteDirective {
     this.handleWatchLater();
   }
 
-  @Input() movieId!: number;
+  @Input() movieId!: any;
   user: User;
   element: any;
 

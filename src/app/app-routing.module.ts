@@ -49,6 +49,22 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     data: { roles: [Role.Admin] },
   },
+  {
+    path: 'favorites',
+    loadChildren: () =>
+      import('./screens/favorites/favorites.module').then(
+        (m) => m.FavoritesModule
+      ),
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'watch-later',
+    loadChildren: () =>
+      import('./screens/watch-later/watch-later.module').then(
+        (m) => m.WatchLaterModule
+      ),
+    canActivate: [AuthGuard],
+  },
 
   // otherwise redirect to home
   { path: '**', redirectTo: '' },

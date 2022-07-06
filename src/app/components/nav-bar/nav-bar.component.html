@@ -32,6 +32,14 @@
         <a class="nav-link" href="/admin">Admin</a>
       </li>
 
+      <li class="nav-item" *ngIf="user">
+        <a class="nav-link" href="/favorites">Favorites</a>
+      </li>
+
+      <li class="nav-item" *ngIf="user">
+        <a class="nav-link" href="/watch-later">Watch Later</a>
+      </li>
+
       <li class="nav-item dropdown" ngbDropdown>
         <a
           class="nav-link dropdown-toggle"

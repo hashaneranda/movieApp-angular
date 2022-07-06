@@ -233,7 +233,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
       let favoriteDb: any = localStorage.getItem('favoriteDb');
 
       try {
-        if (favoriteDb) reviewDb = JSON.parse(favoriteDb);
+        if (favoriteDb) favoriteDb = JSON.parse(favoriteDb);
       } catch (error) {
         console.log('error parsing');
       }
@@ -246,19 +246,19 @@ export class FakeBackendInterceptor implements HttpInterceptor {
     }
 
     function getFavorite() {
-      const { user } = body;
+      const user = params.get('user');
 
       let favoriteDb: any = localStorage.getItem('favoriteDb');
 
       try {
-        if (favoriteDb) reviewDb = JSON.parse(favoriteDb);
+        if (favoriteDb) favoriteDb = JSON.parse(favoriteDb);
       } catch (error) {
         console.log('error parsing');
       }
 
       favoriteDb = favoriteDb ?? [];
 
-      const data = favoriteDb.filter((x: any) => x.user === user);
+      const data = favoriteDb.filter((x: any) => x.user === Number(user));
 
       return ok(data);
     }
@@ -275,7 +275,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
       let watchLaterDb: any = localStorage.getItem('watchLaterDb');
 
       try {
-        if (watchLaterDb) reviewDb = JSON.parse(watchLaterDb);
+        if (watchLaterDb) watchLaterDb = JSON.parse(watchLaterDb);
       } catch (error) {
         console.log('error parsing');
       }
@@ -296,14 +296,14 @@ export class FakeBackendInterceptor implements HttpInterceptor {
       let watchLaterDb: any = localStorage.getItem('watchLaterDb');
 
       try {
-        if (watchLaterDb) reviewDb = JSON.parse(watchLaterDb);
+        if (watchLaterDb) watchLaterDb = JSON.parse(watchLaterDb);
       } catch (error) {
         console.log('error parsing');
       }
 
       watchLaterDb = watchLaterDb ?? [];
 
-      const data = watchLaterDb.filter((x: any) => x.user === user);
+      const data = watchLaterDb.filter((x: any) => x.user === Number(user));
 
       return ok(data);
     }

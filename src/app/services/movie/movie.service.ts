@@ -223,7 +223,7 @@ export class MoviesService {
    * @param movie movie ID
    * @returns
    */
-  addFavorite(movie: number, user: number): Observable<any> {
+  addFavorite(movie: any, user: number): Observable<any> {
     return this.http.post<any>(`${environment.apiUrl}/favorite`, {
       user,
       movie,
@@ -236,7 +236,7 @@ export class MoviesService {
    * @param movie movie ID
    * @returns
    */
-  addWatchLater(movie: number, user: number): Observable<any> {
+  addWatchLater(movie: any, user: number): Observable<any> {
     return this.http.post<any>(`${environment.apiUrl}/watch-later`, {
       user,
       movie,

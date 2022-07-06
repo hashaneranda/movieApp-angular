@@ -43,15 +43,10 @@
     <h3>Revenue: {{ movie.revenue }}$</h3>
 
     <div class="action_container d-flex flex-row gap-4">
-      <button watchLater mat-raised-button color="primary" [movieId]="movie.id">
+      <button watchLater mat-raised-button color="primary" [movieId]="movie">
         Watch later
       </button>
-      <button
-        addFavorite
-        mat-raised-button
-        color="secondary"
-        [movieId]="movie.id"
-      >
+      <button addFavorite mat-raised-button color="secondary" [movieId]="movie">
         Add Favorite
       </button>
       <button

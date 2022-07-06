@@ -14,7 +14,7 @@ export class WatchLaterDirective {
     this.handleWatchLater();
   }
 
-  @Input() movieId!: number;
+  @Input() movieId!: any;
   user: User;
   element: any;
 
