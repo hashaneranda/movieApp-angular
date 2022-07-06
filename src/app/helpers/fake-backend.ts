@@ -37,7 +37,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
     request: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-    const { url, method, headers, body } = request;
+    const { url, method, headers, body, params } = request;
 
     let userDb: any = localStorage.getItem('userDB');
 
@@ -61,6 +61,16 @@ export class FakeBackendInterceptor implements HttpInterceptor {
 
     movieDB = movieDB ?? [];
 
+    let reviewDb: any = localStorage.getItem('reviewDb');
+
+    try {
+      if (reviewDb) reviewDb = JSON.parse(reviewDb);
+    } catch (error) {
+      console.log('error parsing');
+    }
+
+    reviewDb = reviewDb ?? [];
+
     return handleRoute();
 
     function handleRoute() {
@@ -73,6 +83,16 @@ export class FakeBackendInterceptor implements HttpInterceptor {
           return getUserById();
         case url.endsWith('/add-movie') && method === 'POST':
           return addMovie();
+        case url.endsWith('/add-review') && method === 'POST':
+          return addReview();
+        case url.endsWith('/watch-later') && method === 'POST':
+          return addWatchLater();
+        case url.endsWith('/watch-later') && method === 'GET':
+          return getWatchLater();
+        case url.endsWith('/favorite') && method === 'POST':
+          return addFavorite();
+        case url.endsWith('/favorite') && method === 'GET':
+          return getFavorite();
         default:
           // pass through any requests not handled above
           return next.handle(request);
@@ -157,9 +177,6 @@ export class FakeBackendInterceptor implements HttpInterceptor {
     }
 
     function addMovie() {
-      console.log('body', body);
-
-      // const { movie } = body;
       const { name, title, description, rating, language, genre, image } = body;
 
       const movieNew = {
@@ -184,6 +201,111 @@ export class FakeBackendInterceptor implements HttpInterceptor {
       localStorage.setItem('movieDB', JSON.stringify([...movieDB, movieNew]));
 
       return ok(movieNew);
+    }
+
+    function addReview() {
+      const { review, user, movie } = body;
+
+      const reviewNew = {
+        review,
+        user,
+        movie,
+        date: new Date(),
+      };
+
+      localStorage.setItem(
+        'reviewDb',
+        JSON.stringify([...reviewDb, reviewNew])
+      );
+
+      return ok(reviewNew);
+    }
+
+    function addFavorite() {
+      const { user, movie } = body;
+
+      const data = {
+        user,
+        movie,
+        date: new Date(),
+      };
+
+      let favoriteDb: any = localStorage.getItem('favoriteDb');
+
+      try {
+        if (favoriteDb) reviewDb = JSON.parse(favoriteDb);
+      } catch (error) {
+        console.log('error parsing');
+      }
+
+      favoriteDb = favoriteDb ?? [];
+
+      localStorage.setItem('favoriteDb', JSON.stringify([...favoriteDb, data]));
+
+      return ok(data);
+    }
+
+    function getFavorite() {
+      const { user } = body;
+
+      let favoriteDb: any = localStorage.getItem('favoriteDb');
+
+      try {
+        if (favoriteDb) reviewDb = JSON.parse(favoriteDb);
+      } catch (error) {
+        console.log('error parsing');
+      }
+
+      favoriteDb = favoriteDb ?? [];
+
+      const data = favoriteDb.filter((x: any) => x.user === user);
+
+      return ok(data);
+    }
+
+    function addWatchLater() {
+      const { user, movie } = body;
+
+      const data = {
+        user,
+        movie,
+        date: new Date(),
+      };
+
+      let watchLaterDb: any = localStorage.getItem('watchLaterDb');
+
+      try {
+        if (watchLaterDb) reviewDb = JSON.parse(watchLaterDb);
+      } catch (error) {
+        console.log('error parsing');
+      }
+
+      watchLaterDb = watchLaterDb ?? [];
+
+      localStorage.setItem(
+        'watchLaterDb',
+        JSON.stringify([...watchLaterDb, data])
+      );
+
+      return ok(data);
+    }
+
+    function getWatchLater() {
+      const user = params.get('user');
+
+      let watchLaterDb: any = localStorage.getItem('watchLaterDb');
+
+      try {
+        if (watchLaterDb) reviewDb = JSON.parse(watchLaterDb);
+      } catch (error) {
+        console.log('error parsing');
+      }
+
+      watchLaterDb = watchLaterDb ?? [];
+
+      const data = watchLaterDb.filter((x: any) => x.user === user);
+
+      return ok(data);
     }
   }
 }

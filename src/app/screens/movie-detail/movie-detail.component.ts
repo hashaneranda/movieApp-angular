@@ -4,6 +4,8 @@ import { ActivatedRoute } from '@angular/router';
 import { Movie } from '@app/models/movie';
 import { MoviesService } from '@app/services/movie/movie.service';
 import { Location } from '@angular/common';
+import { User } from '@app/models';
+import { AuthenticationService } from '@app/services';
 
 @Component({
   selector: 'app-movie-detail',
@@ -12,18 +14,22 @@ import { Location } from '@angular/common';
 })
 export class MovieDetailComponent implements OnInit {
   movie!: Movie;
+  user!: User;
   isLoaded: boolean = false;
   gotError: boolean = false;
+  hasWatched: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
     private service: MoviesService,
     private title: Title,
-    private location: Location
+    private location: Location,
+    private authenticationService: AuthenticationService
   ) {}
 
   ngOnInit(): void {
     const movieId: any = this.route.snapshot.paramMap.get('movie_id');
+    this.user = this.authenticationService.userValue;
     this.getMovie(movieId);
   }
 
@@ -38,11 +44,35 @@ export class MovieDetailComponent implements OnInit {
         console.log(res);
         this.isLoaded = true;
         this.title.setTitle(this.movie.title);
+
+        this.checkMovieWatched();
       },
       (error) => {
         this.gotError = true;
       }
     );
+  }
+
+  /**
+   * Check if user has already watched the movie
+   */
+  checkMovieWatched() {
+    this.service
+      .hasWatchedMovie(this.movie.id, this.user.id)
+      .subscribe((res: any) => {
+        console.log('res watched', res);
+        this.hasWatched = !!res?.isWatched;
+      });
+  }
+
+  /**
+   * Watched movie
+   * @param $event event
+   */
+  watchedCallback($event: any) {
+    if ($event?.isWatched) {
+      this.hasWatched = true;
+    }
   }
 
   /**

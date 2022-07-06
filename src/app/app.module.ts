@@ -28,6 +28,7 @@ import { WatchLaterDirective } from './directives/watch-later/watch-later.direct
 import { AddFavoriteDirective } from './directives/add-favorite/add-favorite.directive';
 import { WatchMovieDirective } from './directives/watch-movie/watch-movie.directive';
 import { MovieImageResolverPipe } from './pipes/movie-image-resolver/movie-image-resolver.pipe';
+import { AddReviewModule } from './components/add-review/add-review.module';
 
 export function initApp(http: HttpClient, translate: TranslateService) {
   return () =>
@@ -69,6 +70,7 @@ export function initApp(http: HttpClient, translate: TranslateService) {
     MatIconModule,
     TranslateModule.forRoot(),
     ReviewListModule,
+    AddReviewModule,
   ],
   declarations: [
     AppComponent,

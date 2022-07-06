@@ -43,14 +43,31 @@
     <h3>Revenue: {{ movie.revenue }}$</h3>
 
     <div class="action_container d-flex flex-row gap-4">
-      <button watchLater mat-raised-button color="primary">Watch later</button>
-      <button addFavorite mat-raised-button color="secondary">
+      <button watchLater mat-raised-button color="primary" [movieId]="movie.id">
+        Watch later
+      </button>
+      <button
+        addFavorite
+        mat-raised-button
+        color="secondary"
+        [movieId]="movie.id"
+      >
         Add Favorite
       </button>
-      <button watchMovie mat-raised-button color="accent">Watch</button>
+      <button
+        watchMovie
+        mat-raised-button
+        color="accent"
+        [movieId]="movie.id"
+        (watchedCallback)="watchedCallback($event)"
+      >
+        {{ hasWatched ? "Watch Again" : "Watch" }}
+      </button>
     </div>
   </div>
 </div>
+
+<add-review *ngIf="isLoaded && hasWatched" [movieId]="movie.id"></add-review>
 
 <review-list *ngIf="isLoaded" [movieId]="movie.id"></review-list>
 

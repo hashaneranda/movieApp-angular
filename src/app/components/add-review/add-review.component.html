@@ -1,0 +1,30 @@
+<p>Add Review</p>
+<form
+  class="w-100 d-flex flex-column mb-5 align-items-end"
+  [formGroup]="reviewForm"
+  (ngSubmit)="onSubmit()"
+>
+  <mat-form-field class="example-full-width w-100" appearance="fill">
+    <mat-label>Leave a review</mat-label>
+    <textarea
+      matInput
+      placeholder="Ex. This movie is..."
+      formControlName="review"
+      [errorStateMatcher]="matcher"
+    ></textarea>
+
+    <mat-error
+      *ngIf="f?.['review']?.hasError('review') && !f?.['review']?.hasError('required')"
+    >
+      Please enter a valid email address
+    </mat-error>
+    <mat-error *ngIf="f?.['review']?.hasError('required')">
+      Review is <strong>required</strong>
+    </mat-error>
+  </mat-form-field>
+
+  <button mat-raised-button color="primary" [disabled]="loading" class="mt-3">
+    <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+    Add Review
+  </button>
+</form>

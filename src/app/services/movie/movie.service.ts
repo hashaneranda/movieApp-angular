@@ -123,6 +123,20 @@ export class MoviesService {
   }
 
   /**
+   * Add Review
+   * @param review review
+   * @param movie movie ID
+   * @returns
+   */
+  addReview(review: string, movie: number, user: number): Observable<any> {
+    return this.http.post<any>(`${environment.apiUrl}/add-review`, {
+      review,
+      user,
+      movie,
+    });
+  }
+
+  /**
    * Fetch recent movie
    * @returns
    */
@@ -141,6 +155,117 @@ export class MoviesService {
       page: 1,
       total_pages: 10,
       results: movieDB,
+    });
+  }
+
+  /**
+   * Record watch movie history
+   * @param movie movie ID
+   * @param user user ID
+   * @returns
+   */
+  watchMovie(movie: number, user: number): Observable<any> {
+    let watchHistoryDB: any = localStorage.getItem('watchHistoryDB');
+
+    try {
+      if (watchHistoryDB) watchHistoryDB = JSON.parse(watchHistoryDB);
+    } catch (error) {
+      console.log('error parsing');
+    }
+
+    watchHistoryDB = watchHistoryDB ?? [];
+
+    const watchedMovie = {
+      movie,
+      user,
+      date: new Date(),
+    };
+
+    localStorage.setItem(
+      'watchHistoryDB',
+      JSON.stringify([...watchHistoryDB, watchedMovie])
+    );
+
+    return of({
+      watchedMovie,
+    });
+  }
+
+  /**
+   * Check if movie is watched
+   * @param movie movie ID
+   * @param user user ID
+   * @returns
+   */
+  hasWatchedMovie(movie: number, user: number): Observable<any> {
+    let watchHistoryDB: any = localStorage.getItem('watchHistoryDB');
+
+    try {
+      if (watchHistoryDB) watchHistoryDB = JSON.parse(watchHistoryDB);
+    } catch (error) {
+      console.log('error parsing');
+    }
+
+    watchHistoryDB = watchHistoryDB ?? [];
+
+    const watchedMovie = watchHistoryDB.find(
+      (x: any) => x.movie === movie && x.user === user
+    );
+
+    return of({
+      isWatched: !!watchedMovie,
+    });
+  }
+
+  /**
+   * Add Favorite
+   * @param user user
+   * @param movie movie ID
+   * @returns
+   */
+  addFavorite(movie: number, user: number): Observable<any> {
+    return this.http.post<any>(`${environment.apiUrl}/favorite`, {
+      user,
+      movie,
+    });
+  }
+
+  /**
+   * Add Watch later
+   * @param user user
+   * @param movie movie ID
+   * @returns
+   */
+  addWatchLater(movie: number, user: number): Observable<any> {
+    return this.http.post<any>(`${environment.apiUrl}/watch-later`, {
+      user,
+      movie,
+    });
+  }
+
+  /**
+   * Add Watch later
+   * @param user user
+   * @returns
+   */
+  getWatchLater(user: number): Observable<any> {
+    let params = new HttpParams().set('user', user);
+
+    return this.http.get<any>(`${environment.apiUrl}/watch-later`, {
+      params: params,
+    });
+  }
+
+  /**
+   * Add Favorite
+   * @param user user
+   * @returns
+   */
+  getFavorite(user: number): Observable<any> {
+    let params = new HttpParams().set('user', user);
+
+    return this.http.get<any>(`${environment.apiUrl}/favorite`, {
+      params: params,
     });
   }
 }
