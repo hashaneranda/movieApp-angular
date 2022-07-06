@@ -8,6 +8,7 @@ import { SearchModule } from '@app/components/search/search.module';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { initApp } from '@app/app.module';
 import { HttpClient } from '@angular/common/http';
+import { RecentMoviesModule } from '@app/components/recent-movies/recent-movies.module';
 
 @NgModule({
   declarations: [HomeComponent],
@@ -24,6 +25,7 @@ import { HttpClient } from '@angular/common/http';
         multi: true,
       },
     }),
+    RecentMoviesModule,
   ],
 })
 export class HomeModule {}
