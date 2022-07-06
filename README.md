@@ -29,13 +29,13 @@ Clone the repo:
 
 ```bash
 git clone https://github.com/hashaneranda/movieApp-angular
-cd order-form
+cd movieApp-angular
 ```
 
 Install the dependencies:
 
 ```bash
-yarn install
+npm install
 ```
 
 and create a new file .env and copy the content of .env.sample
